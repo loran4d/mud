@@ -64,7 +64,7 @@ float race_dam_mod ( int race, int magic );
 void strip_colour ( char *inbuf, size_t i_buf );
 size_t proc_colour ( char *inbuf, int color_lvl, size_t len );
 extern int sub_success;
-int total_chance ( Character *ch, int skill );
+int total_chance ( Character *ch, int skill, string custom_spell_name = "");
 gold_int exp_needed ( Character *ch );
 gold_int group_exp_needed ( Character *ch );
 gold_int level_exp ( int chclass, int level, int tier, int remorts );
@@ -521,8 +521,8 @@ void set_skill ( Character *ch, int skill, int amount );
 #define IS_NPC(ch)  (IS_SET_AR(MOB_FLAGS(ch), MOB_ISNPC))
 #define IS_MOB(ch)  (IS_NPC(ch) && !(ch)->proto)
 
-#define IS_IMP(ch)	(GET_LEVEL(ch) == LVL_IMPL)
-#define IS_IMM(ch)	(GET_LEVEL(ch) >= LVL_IMMORT)
+#define IS_IMP(ch)	(!IS_NPC(ch) && GET_LEVEL(ch) == LVL_IMPL)
+#define IS_IMM(ch)	(!IS_NPC(ch) && GET_LEVEL(ch) >= LVL_IMMORT)
 
 #define MOB_FLAGGED(ch, flag) (IS_NPC(ch) && IS_SET_AR(MOB_FLAGS(ch), (flag)))
 #define PLR_FLAGGED(ch, flag) (!IS_NPC(ch) && IS_SET_AR(PLR_FLAGS(ch), (flag)))
@@ -1236,6 +1236,7 @@ struct obj_data *has_vehicle ( Character *ch );
 #define CONFIG_NOEFFECT         config_info.play.NOEFFECT
 #define LAST_PK			config_info.play.LAST_PK_WIN
 #define CHAMPION		config_info.play.pk_champion
+#define CONFIG_RESET_MINE       config_info.play.reset_mine
 
 /** Crash Saves **/
 #define CONFIG_FREE_RENT        config_info.csd.free_rent

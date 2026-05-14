@@ -66,36 +66,36 @@
 #define COL_GREEN 	"\x1B[0;32m"
 #define COL_YELLOW 	"\x1B[0;33m"
 #define COL_BLUE 	"\x1B[0;34m"
-#define COL_MAGENTA 	"\x1B[0;35m"
+#define COL_MAGENTA "\x1B[0;35m"
 #define COL_CYAN 	"\x1B[0;36m"
 #define COL_WHITE 	"\x1B[0;37m"
 #define COL_FG_OFF	"\x1B[38m"	/* works on normal terminals but not
                        colour_xterms */
 
 /* The bold or extended ANSI colours */
-#define COL_E_BLACK	"\x1B[1;30m"	/* /cl */
-#define COL_E_RED 	"\x1B[1;31m"
-#define COL_E_GREEN 	"\x1B[1;32m"
-#define COL_E_YELLOW 	"\x1B[1;33m"
-#define COL_E_BLUE 	"\x1B[1;34m"
-#define COL_E_MAGENTA 	"\x1B[1;35m"
-#define COL_E_CYAN 	"\x1B[1;36m"
-#define COL_E_WHITE 	"\x1B[1;37m"
+#define COL_E_BLACK   "\x1B[1;30m"	/* /cl */
+#define COL_E_RED     "\x1B[1;31m"
+#define COL_E_GREEN   "\x1B[1;32m"
+#define COL_E_YELLOW  "\x1B[1;33m"
+#define COL_E_BLUE    "\x1B[1;34m"
+#define COL_E_MAGENTA "\x1B[1;35m"
+#define COL_E_CYAN    "\x1B[1;36m"
+#define COL_E_WHITE   "\x1B[1;37m"
 
 /* The background colours */
 
-#define COL_BK_BLACK    "\x1B[40m"	/* /cL */
-#define COL_BK_RED 	"\x1B[41m"
-#define COL_BK_GREEN 	"\x1B[42m"
-#define COL_BK_YELLOW 	"\x1B[43m"
-#define COL_BK_BLUE 	"\x1B[44m"
-#define COL_BK_MAGENTA 	"\x1B[45m"
-#define COL_BK_CYAN 	"\x1B[46m"
-#define COL_BK_WHITE 	"\x1B[47m"
+#define COL_BK_BLACK   "\x1B[40m"	/* /cL */
+#define COL_BK_RED     "\x1B[41m"
+#define COL_BK_GREEN   "\x1B[42m"
+#define COL_BK_YELLOW  "\x1B[43m"
+#define COL_BK_BLUE    "\x1B[44m"
+#define COL_BK_MAGENTA "\x1B[45m"
+#define COL_BK_CYAN    "\x1B[46m"
+#define COL_BK_WHITE   "\x1B[47m"
 
-#define STYLE_UNDERLINE   "\x1B[4m"	/* /cu */
-#define STYLE_FLASH	  "\x1B[5m"	/* /cf */
-#define STYLE_REVERSE	  "\x1B[7m"	/* /cv */
+#define STYLE_UNDERLINE "\x1B[4m"	/* /cu */
+#define STYLE_FLASH     "\x1B[5m"	/* /cf */
+#define STYLE_REVERSE   "\x1B[7m"	/* /cv */
 
 #define SOUND_BELL	  "\007"	/* /sb */
 
@@ -196,9 +196,9 @@ int count_chars(const char *txt, char character)
 
 void strip_colour(char *inbuf, size_t i_buf) {
 char *out_buf = NULL, insert_text[10];
-    register unsigned int inpos = 0, outpos = 0;
+    unsigned int inpos = 0, outpos = 0;
     int remaining, colour = -2;
-    register int i;
+    int i;
     size_t b_len;
 
 

@@ -2902,7 +2902,7 @@ ACMD ( do_score )
                                        ch->player.time.played, 0 );
     ch->Send (
         "{cg| |-------------------------------------------------------------------| |\r\n"
-        "| | {cwAge: {cy%-3d{cg  --  {cwYou have been playing for [{cy%3d{cw] day%s and [{cy%2d{cw] hour%s%s{cg | |\r\n",
+        "| | {cwAge: {cy %-3d{cg  --  {cwPlaying for [ {cy%3d{cw] day%s and [ {cy%2d{cw] hour%s%s{cg            | |\r\n",
         GET_AGE ( ch ),
         playing_time.day, playing_time.day == 1 ? "" : "s",
         playing_time.hours,
@@ -3545,7 +3545,7 @@ void skill_spell_help ( Character *ch, int spell )
         "     Points: {cy%-3s{cg       Alters Objects: {cy%-3s{cg\r\n"
         "     Groups: {cy%-3s{cg               Masses: {cy%-3s{cg\r\n"
         "      Areas: {cy%-3s{cg            Summoning: {cy%-3s{cg\r\n"
-        "   Creation: {cy%-3s{cg\r\n\r\n",
+        "   Creation: {cy%-3s{cg                   GM: {cy%-3s{cg\r\n\r\n",
         YESNO ( IS_SET ( spell_info[spell].targets, TAR_AREA_DIR ) ),
         YESNO ( spell_info[spell].violent ),
         YESNO ( IS_SET ( spell_info[spell].routines, MAG_AFFECTS ) ),
@@ -3556,7 +3556,8 @@ void skill_spell_help ( Character *ch, int spell )
         YESNO ( IS_SET ( spell_info[spell].routines, MAG_MASSES ) ),
         YESNO ( IS_SET ( spell_info[spell].routines, MAG_AREAS ) ),
         YESNO ( IS_SET ( spell_info[spell].routines, MAG_SUMMONS ) ),
-        YESNO ( IS_SET ( spell_info[spell].routines, MAG_CREATIONS ) )
+        YESNO ( IS_SET ( spell_info[spell].routines, MAG_CREATIONS ) ),
+        YESNO ( spell_info[spell].gm )
     );
     if ( IS_SET ( spell_info[spell].targets, TAR_SELF_ONLY ) )
         ch->Send ( "This spell can only be cast upon yourself.\r\n" );
@@ -3571,7 +3572,7 @@ void skill_spell_help ( Character *ch, int spell )
 
 
     if ( knows_spell ( ch, spell ) )
-        ch->Send ( "{cCYou know this spell{cg\r\n" );
+        ch->Send ( "{cCYou know this %s{cg\r\n", IS_SKILL ( spell ) ? "skill" : "spell" );
     if ( !PRF_FLAGGED ( ch, PRF_NOGRAPHICS ) )
         ch->Send ( "----------------------------------------------------{c0\r\n" );
 }
@@ -4567,8 +4568,8 @@ ACMD ( do_gen_ps )
 
 void perform_mortal_where ( Character *ch, char *arg )
 {
-    register Character *i;
-    register Descriptor *d;
+    Character *i;
+    Descriptor *d;
     struct clan_deed_type *cl;
     int found = -1, clan_num;
 
@@ -4687,8 +4688,8 @@ void print_object_location ( int num, struct obj_data *obj,
 
 void perform_immort_where ( Character *ch, char *arg )
 {
-    register Character *i;
-    register struct obj_data *k;
+    Character *i;
+    struct obj_data *k;
     Descriptor *d;
     int num = 0, counter = 0, found = 0;
 
@@ -4780,8 +4781,7 @@ void perform_immort_where ( Character *ch, char *arg )
         if ( !found )
         {
             if ( dynbuf )
-                ;
-            free ( dynbuf );
+                free ( dynbuf );
             dynbuf = NULL;
             ch->Send ( "Couldn't find any such thing.\r\n" );
         }
@@ -5356,7 +5356,6 @@ void stop_fusion ( Character *ch )
         return;
 
     for ( i = 0; i < TOP_FUSE_LOCATION; i++ )
-        FUSE_LOC ( ch, i ) = NULL;
         if ( FUSE_LOC ( ch, i ) )
         {
             was_fused = TRUE;

@@ -197,7 +197,7 @@ ACMD ( do_gen_comm );
 void die ( Character *ch, Character *killer );
 void Crash_rentsave ( Character *ch, int cost );
 void write_poofs ( Character *ch );
-void improve_skill ( Character *ch, int skill );
+void improve_skill ( Character *ch, int skill, remembered_skill_spell *rem = nullptr );
 void stop_auction ( int type, Character *ch );
 void add_follower ( Character *ch, Character *leader );
 void raw_kill ( Character *ch, Character *killer );
@@ -935,10 +935,11 @@ ACMD ( do_report )
 {
     char buf[MAX_INPUT_LENGTH];
 
-    sprintf ( buf, "$n reports: %d/%dH, %d/%dM, %d/%dV\r\n",
-               GET_HIT ( ch ), GET_MAX_HIT ( ch ),
+    sprintf ( buf, "$n reports: %d/%dH, %d/%dM, %d/%dV, %d/%dS\r\n",
+               GET_HIT ( ch ),  GET_MAX_HIT ( ch ),
                GET_MANA ( ch ), GET_MAX_MANA ( ch ),
-               GET_MOVE ( ch ), GET_MAX_MOVE ( ch ) );
+               GET_MOVE ( ch ), GET_MAX_MOVE ( ch ),
+               GET_STAMINA(ch), GET_MAX_STAMINA(ch) );
 
     CAP ( buf );
     if ( IS_NPC ( ch ) && ch->master )
@@ -948,10 +949,11 @@ ACMD ( do_report )
     }
 
     act ( buf, FALSE, ch, 0, 0, TO_ROOM );
-    sprintf ( buf, "You report: %d/%dH, %d/%dM, %d/%dV\r\n",
-               GET_HIT ( ch ), GET_MAX_HIT ( ch ),
+    sprintf ( buf, "You report: %d/%dH, %d/%dM, %d/%dV, %d/%dS\r\n",
+               GET_HIT ( ch ),  GET_MAX_HIT ( ch ),
                GET_MANA ( ch ), GET_MAX_MANA ( ch ),
-               GET_MOVE ( ch ), GET_MAX_MOVE ( ch ) );
+               GET_MOVE ( ch ), GET_MAX_MOVE ( ch ),
+               GET_STAMINA(ch), GET_MAX_STAMINA(ch) );
     *ch << buf;
 }
 

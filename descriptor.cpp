@@ -65,7 +65,6 @@
 #include "ident.h"
 #include "auction.h"
 #include "descriptor.h"
-#include "linkedlist.h"
 
 extern struct txt_block *bufpool;  /* pool of large output buffers */
 extern int buf_largecount;       /* # of large buffers which exist */
@@ -318,7 +317,7 @@ bool Descriptor::pending_output() {
 
 Descriptor::Descriptor() {
     showstr_count = 0;
-    telnet_capable = 0;
+    telnet_capable = 1;
     locked = 0;
     close_me = 0;
     host[0] = '\0';
@@ -419,20 +418,19 @@ Descriptor::~Descriptor() {
             new_mudlog(CMP, LVL_IMMORT, TRUE, "Losing player: %s.", GET_NAME(this->character) ? GET_NAME(this->character) : "<null>");
             delete character;
         }
-    } else
-        new_mudlog(CMP, LVL_IMMORT, TRUE, "Losing descriptor without char.");
+    }
 
     /* JE 2/22/95 -- part of my unending quest to make switch stable */
     if (this->original && this->original->desc)
         this->original->desc = NULL;
 
     /* Clear the command history. */
-    if (this->history) {
-        for (unsigned int cnt = 0; cnt < HISTORY_SIZE; cnt++)
-            if (this->history[cnt]) {
-                free(this->history[cnt]);
-                this->history[cnt] = NULL;
-            }
+    for (unsigned int cnt = 0; cnt < HISTORY_SIZE; cnt++)
+    {
+        if (this->history[cnt]) {
+            free(this->history[cnt]);
+            this->history[cnt] = NULL;
+        }
     }
 
     if (this->showstr_head) {
@@ -622,4 +620,3 @@ size_t Descriptor::Output(stringstream &i) {
     return output.size();
 
 }
-

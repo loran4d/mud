@@ -920,9 +920,10 @@ void trigedit_save(Descriptor *d) {
 
 void dg_olc_script_copy(Descriptor *d) {
 
-    if (OLC_SCRIPT(d))
+    if (OLC_SCRIPT(d)) {
        delete OLC_SCRIPT(d);
        OLC_SCRIPT(d) = NULL;
+    }
 
     if (OLC_ITEM_TYPE(d)==MOB_TRIGGER) {
         if (OLC_MOB(d)->proto_script)
@@ -1199,7 +1200,7 @@ int format_script(Descriptor *d) {
             nlen += 2;
         }
         llen = snprintf(line + nlen, sizeof(line) - nlen, "%s\r\n", t);
-        if (llen < 0 || llen + nlen + len > d->max_str - 1 ) {
+        if (llen + nlen + len > d->max_str - 1 ) {
             d->Output( "String too long, formatting aborted\r\n");
             free(sc);
             return FALSE;

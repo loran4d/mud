@@ -13,8 +13,14 @@ ECL = 0
 CC = g++
 
 # Any special flags you want to pass to the compiler
-MYFLAGS = -Wall -Wno-sign-compare -Wunused -Wno-unused-local-typedefs -Wno-format-truncation -Wformat -O0 -ggdb3 -fno-inline -std=c++11
-LIBS = -lz -lpthread -lnsl -lm -lc -lcrypt
+MYFLAGS = -Wall -Wno-sign-compare -Wunused -Wno-unused-local-typedefs -Wno-format-truncation -Wformat -O0 -ggdb3 -fno-inline -std=c++17
+
+ifeq ($(UNAME_S),Darwin)
+	LIBS = -lz -lpthread -lm -lc -lcrypt
+else
+	LIBS = -lz -lpthread -lnsl -lm -lc -lcrypt
+endif
+
 SRCFILES := $(wildcard *.cpp)
 OBJFILES := $(patsubst %.cpp,%.o,$(SRCFILES))
 ifeq ($(ECL),1)
@@ -30,7 +36,7 @@ PROFILE =
 # Do Not Modify Anything Below This Line (unless you know what you're doing) #
 ##############################################################################
 
-BINDIR = bin
+BINDIR = ../bin
 
 CPPFLAGS = $(MYFLAGS) $(PROFILE)
 
